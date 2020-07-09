@@ -1,3 +1,5 @@
+@import 'dimens';
+
 * {
   box-sizing: border-box;
 }
@@ -5,6 +7,6 @@
 html,
 body {
   background: white;
-  font-size: 16px;        // Base font size
+  font-size: $font-size-base;        // Base font size
   margin: 0;
 }
