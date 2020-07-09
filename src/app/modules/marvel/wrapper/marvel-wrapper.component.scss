@@ -1,0 +1,37 @@
+@import 'dimens';
+
+.layout {
+  width: 100%;
+  height: 100vh;
+}
+
+.side-nav {
+  padding: 20px;
+}
+
+.nav {
+  list-style-type: none;
+  padding: 0;
+  li {
+    display: block;
+    padding: 10px;
+    cursor: pointer;
+  }
+}
+
+.title__logo {
+  width: 80px;
+  vertical-align: middle;
+}
+
+.title__api {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: $font-size-great;
+}
+
+.child-container {
+  padding: 25px;
+}

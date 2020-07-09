@@ -1,0 +1,28 @@
+<mat-sidenav-container class="layout">
+  <mat-sidenav
+    class="side-nav"
+    mode="side"
+    opened>
+    <div class="side-nav__title">
+      <img
+        class="title__logo"
+        src="assets/images/marvel_logo.png"
+        alt="Marvel Logo">
+      <span class="title__api">API</span>
+    </div>
+    <ul class="nav">
+      <li matRipple>Bookmarks</li>
+      <li matRipple>Characters</li>
+      <li matRipple>Character's comics</li>
+      <li matRipple>Character's stories</li>
+      <li matRipple>Comics</li>
+      <li matRipple>Comic's characters</li>
+      <li matRipple>Comic's stories</li>
+      <li matRipple>Stories characters</li>
+      <li matRipple>Stories Comics</li>
+    </ul>
+  </mat-sidenav>
+  <mat-sidenav-content class="child-container">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
