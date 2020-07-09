@@ -28,9 +28,15 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/scss/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/scss/tools",
+                "src/scss/settings"
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -92,7 +98,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/scss/styles.scss"
             ],
             "scripts": []
           }
@@ -123,6 +129,11 @@
           }
         }
       }
-    }},
-  "defaultProject": "marvel-api"
+    }
+  },
+  "defaultProject": "marvel-api",
+  "cli": {
+    "analytics": "a07b3972-74ef-40c4-8cb0-04e369554bcc",
+    "defaultCollection": "@ngsl/schematics"
+  }
 }
