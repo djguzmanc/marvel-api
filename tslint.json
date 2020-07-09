@@ -8,13 +8,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "app",
+      "ma",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "ty",
+      "ma",
       "kebab-case"
     ],
     "import-blacklist": [
