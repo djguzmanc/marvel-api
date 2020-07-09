@@ -1,1 +1,171 @@
-<p>characters works!</p>
+<div
+  [formGroup]="filterForm"
+  class="filtering-bar">
+  <mat-form-field>
+    <mat-label>Filter by name</mat-label>
+    <input
+      formControlName="name"
+      matInput
+      type="search"
+      placeholder="Spider Man">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Comics</mat-label>
+    <mat-select
+      formControlName="comics"
+      multiple>
+      <mat-select-trigger *ngIf="filterForm.get('comics') as comics">
+        {{comics.value ? comics.value[0] : ''}}
+        <span
+          *ngIf="comics.value?.length > 1"
+          class="example-additional-selection">
+        (+{{comics.value.length - 1}} {{comics.value?.length === 2 ? 'other' : 'others'}})
+      </span>
+      </mat-select-trigger>
+      <mat-option
+        *ngFor="let topping of toppingList"
+        [value]="topping">
+        {{topping}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Stories</mat-label>
+    <mat-select
+      formControlName="stories"
+      multiple>
+      <mat-select-trigger *ngIf="filterForm.get('stories') as stories">
+        {{stories.value ? stories.value[0] : ''}}
+        <span
+          *ngIf="stories.value?.length > 1"
+          class="example-additional-selection">
+        (+{{stories.value.length - 1}} {{stories.value?.length === 2 ? 'other' : 'others'}})
+      </span>
+      </mat-select-trigger>
+      <mat-option
+        *ngFor="let topping of toppingList"
+        [value]="topping">
+        {{topping}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-slide-toggle formControlName="nameSort">Sort by name</mat-slide-toggle>
+
+  <div class="filter-actions">
+    <button
+      (click)="clearFilters()"
+      class="delete-icon"
+      *ngIf="filterForm.dirty"
+      mat-icon-button
+      color="warn">
+      <mat-icon>delete</mat-icon>
+    </button>
+
+    <button
+      class="filter-button"
+      mat-raised-button
+      color="primary"
+      (click)="applyFilters(filterForm)">
+      Filter characters
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+</div>
+
+<ng-template #loading>
+  <ma-cool-loading></ma-cool-loading>
+</ng-template>
+<ng-container *ngslAsyncHandler="characters$ | async as characters;
+  useLoading: loading">
+  <div
+    class="table-container"
+    @fadeInOut>
+    <table
+      mat-table
+      [dataSource]="characters.payload?.results || []"
+      class="characters-table mat-elevation-z8">
+
+      <ng-container matColumnDef="thumbnail">
+        <th
+          mat-header-cell
+          *matHeaderCellDef>
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          class="thumbnail-td">
+          <img
+            [src]="element.thumbnail | thumbnail:'standard_small'"
+            alt="{{ element.name }} Thumbnail">
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th
+          class="name-spacing"
+          mat-header-cell
+          *matHeaderCellDef>
+          Name
+        </th>
+        <td
+          class="name-spacing"
+          mat-cell
+          *matCellDef="let element">
+          {{ element.name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th
+          mat-header-cell
+          *matHeaderCellDef>
+          Description
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element">
+          {{ (element.description | truncate:100) || 'No description' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th
+          class="name-spacing"
+          mat-header-cell
+          *matHeaderCellDef>
+          Actions
+        </th>
+        <td
+          class="name-spacing"
+          mat-cell
+          *matCellDef="let element">
+          <button
+            mat-icon-button
+            color="primary">
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tbody>
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns;"></tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>
+
+<mat-paginator
+  [length]="totalItems"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="onNewPage($event)">
+</mat-paginator>
