@@ -1,6 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 import { CharactersWrapperComponent } from './wrapper/characters-wrapper.component';
 import { CharactersComponent } from './pages/characters/characters.component';
+import { CHARACTERS_INDEX } from '@utils/constants';
 
 /**
  * Characters routes
@@ -12,10 +13,10 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'all'
+        redirectTo: CHARACTERS_INDEX
       },
       {
-        path: 'all',
+        path: CHARACTERS_INDEX,
         component: CharactersComponent
       }
     ]

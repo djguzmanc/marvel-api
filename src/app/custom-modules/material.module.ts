@@ -8,6 +8,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSelectInfiniteScrollModule } from 'ng-mat-select-infinite-scroll';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatChipsModule } from '@angular/material/chips';
 
 /**
  * Modules to export
@@ -21,7 +24,10 @@ const modules = [
   MatPaginatorModule,
   MatInputModule,
   MatSelectModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatSelectInfiniteScrollModule,
+  MatAutocompleteModule,
+  MatChipsModule
 ];
 
 /**

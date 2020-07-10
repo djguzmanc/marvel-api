@@ -5,3 +5,6 @@ export * from './thumbnail.interface';
 export * from './thumbnail-variant.interface';
 export * from './pagination-options.interface';
 export * from './characters-options.interface';
+export * from './comic-filter.interface';
+export * from './comics-options.interface';
+export * from './stories-options.interface';

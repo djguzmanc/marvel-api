@@ -22,7 +22,8 @@ export class CharactersFacade implements ICharactersController {
   ) { }
 
   /**
-   * Handles the characters fetch request
+   * Handles the characters request
+   * @param options Filtering options
    */
   getAll(options: Partial<IPaginationOptions & ICharactersOptions>):
     Observable<IFacadeApiMap<IMarvelCollection<ICharactersResponse>>> {

@@ -13,23 +13,21 @@
 
   <mat-form-field>
     <mat-label>Comics</mat-label>
-    <mat-select
-      formControlName="comics"
-      multiple>
-      <mat-select-trigger *ngIf="filterForm.get('comics') as comics">
-        {{comics.value ? comics.value[0] : ''}}
-        <span
-          *ngIf="comics.value?.length > 1"
-          class="example-additional-selection">
-        (+{{comics.value.length - 1}} {{comics.value?.length === 2 ? 'other' : 'others'}})
-      </span>
-      </mat-select-trigger>
+    <input
+      [formControl]="comicFilter"
+      matInput
+      type="search"
+      placeholder="Spider Man"
+      [matAutocomplete]="auto">
+    <mat-icon matSuffix>search</mat-icon>
+    <mat-autocomplete #auto="matAutocomplete">
       <mat-option
-        *ngFor="let topping of toppingList"
-        [value]="topping">
-        {{topping}}
+        *ngFor="let option of (comics$ | async)?.payload?.results"
+        [value]="option.value"
+        (click)="onComicSelect(option)">
+        {{ option.label }}
       </mat-option>
-    </mat-select>
+    </mat-autocomplete>
   </mat-form-field>
 
   <mat-form-field>
@@ -45,11 +43,11 @@
         (+{{stories.value.length - 1}} {{stories.value?.length === 2 ? 'other' : 'others'}})
       </span>
       </mat-select-trigger>
-      <mat-option
+      <!-- <mat-option
         *ngFor="let topping of toppingList"
         [value]="topping">
         {{topping}}
-      </mat-option>
+      </mat-option> -->
     </mat-select>
   </mat-form-field>
 
@@ -76,91 +74,108 @@
   </div>
 </div>
 
+<div
+  class="comics"
+  *ngIf="filterForm.get('comics')?.value as comics">
+  <mat-chip-list>
+    <mat-chip
+      *ngFor="let comic of comics"
+      (click)="onComicChipClick(comic)"
+      color="accent"
+      selected>
+      {{ comic.label }}
+    </mat-chip>
+  </mat-chip-list>
+</div>
+
 <ng-template #loading>
   <ma-cool-loading></ma-cool-loading>
 </ng-template>
 <ng-container *ngslAsyncHandler="characters$ | async as characters;
   useLoading: loading">
-  <div
-    class="table-container"
-    @fadeInOut>
-    <table
-      mat-table
-      [dataSource]="characters.payload?.results || []"
-      class="characters-table mat-elevation-z8">
+  <ng-template #empty>There are no results</ng-template>
+  <ng-container *ngIf="(characters.payload?.results || []).length > 0; else empty">
+    <div
+      class="table-container"
+      @fadeInOut>
+      <table
+        mat-table
+        [dataSource]="characters.payload?.results || []"
+        class="characters-table mat-elevation-z8">
 
-      <ng-container matColumnDef="thumbnail">
-        <th
-          mat-header-cell
-          *matHeaderCellDef>
-        </th>
-        <td
-          mat-cell
-          *matCellDef="let element"
-          class="thumbnail-td">
-          <img
-            [src]="element.thumbnail | thumbnail:'standard_small'"
-            alt="{{ element.name }} Thumbnail">
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="thumbnail">
+          <th
+            mat-header-cell
+            *matHeaderCellDef>
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            class="thumbnail-td">
+            <img
+              [src]="element.thumbnail | thumbnail:'standard_small'"
+              alt="{{ element.name }} Thumbnail">
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="name">
-        <th
-          class="name-spacing"
-          mat-header-cell
-          *matHeaderCellDef>
-          Name
-        </th>
-        <td
-          class="name-spacing"
-          mat-cell
-          *matCellDef="let element">
-          {{ element.name }}
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="name">
+          <th
+            class="name-spacing"
+            mat-header-cell
+            *matHeaderCellDef>
+            Name
+          </th>
+          <td
+            class="name-spacing"
+            mat-cell
+            *matCellDef="let element">
+            {{ element.name }}
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="description">
-        <th
-          mat-header-cell
-          *matHeaderCellDef>
-          Description
-        </th>
-        <td
-          mat-cell
-          *matCellDef="let element">
-          {{ (element.description | truncate:100) || 'No description' }}
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="description">
+          <th
+            mat-header-cell
+            *matHeaderCellDef>
+            Description
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element">
+            {{ (element.description | truncate:100) || 'No description' }}
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="actions">
-        <th
-          class="name-spacing"
-          mat-header-cell
-          *matHeaderCellDef>
-          Actions
-        </th>
-        <td
-          class="name-spacing"
-          mat-cell
-          *matCellDef="let element">
-          <button
-            mat-icon-button
-            color="primary">
-            <mat-icon>visibility</mat-icon>
-          </button>
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="actions">
+          <th
+            class="name-spacing"
+            mat-header-cell
+            *matHeaderCellDef>
+            Actions
+          </th>
+          <td
+            class="name-spacing"
+            mat-cell
+            *matCellDef="let element">
+            <button
+              mat-icon-button
+              color="primary">
+              <mat-icon>visibility</mat-icon>
+            </button>
+          </td>
+        </ng-container>
 
-      <tbody>
-        <tr
-          mat-header-row
-          *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-        <tr
-          mat-row
-          *matRowDef="let row; columns: displayedColumns;"></tr>
-      </tbody>
-    </table>
-  </div>
+        <tbody>
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns;"></tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
 </ng-container>
 
 <mat-paginator

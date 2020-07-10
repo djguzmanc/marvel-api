@@ -15,3 +15,7 @@ export const WELCOME_ROUTE = 'welcome';
  * Marvel characters module base route
  */
 export const CHARACTERS_ROUTE = 'characters';
+/**
+ * All characters route
+ */
+export const CHARACTERS_INDEX = 'all';

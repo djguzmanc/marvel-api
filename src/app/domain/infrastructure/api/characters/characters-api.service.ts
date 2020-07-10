@@ -22,6 +22,7 @@ export class CharactersApiService implements ICharactersController {
 
   /**
    * Fetches all characters
+   * @param options Filtering options
    */
   getAll(options: Partial<IPaginationOptions & ICharactersOptions>):
     Observable<IMarvelResponse<IMarvelCollection<ICharactersResponse>>> {
