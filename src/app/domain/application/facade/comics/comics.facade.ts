@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IComicsController } from '@utils/interfaces/controller';
 import { ComicsApiService } from '@domain/infrastructure/api';
 import { IPaginationOptions, IFacadeApiMap, IMarvelCollection, IComicFilter, IComicsOptions } from '@utils/interfaces/auxiliary';
-import { Observable, throwError, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IComicsResponse } from '@utils/interfaces/response';
 import { map, catchError } from 'rxjs/operators';
 import { errorHandler } from '@utils/functions';

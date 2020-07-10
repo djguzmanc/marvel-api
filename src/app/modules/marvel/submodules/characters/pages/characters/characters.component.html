@@ -93,7 +93,9 @@
 </ng-template>
 <ng-container *ngslAsyncHandler="characters$ | async as characters;
   useLoading: loading">
-  <ng-template #empty>There are no results</ng-template>
+  <ng-template #empty>
+    <ma-empty-results></ma-empty-results>
+  </ng-template>
   <ng-container *ngIf="(characters.payload?.results || []).length > 0; else empty">
     <div
       class="table-container"

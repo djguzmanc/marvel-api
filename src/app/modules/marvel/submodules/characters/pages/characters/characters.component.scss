@@ -5,7 +5,7 @@ $table-height: calc(100vh - 222px);
   overflow-y: auto;
 }
 
-ma-cool-loading {
+ma-cool-loading , ma-empty-results{
   height: $table-height;
 }
 
