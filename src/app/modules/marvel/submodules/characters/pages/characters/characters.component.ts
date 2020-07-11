@@ -7,6 +7,7 @@ import { tap, switchMap, filter, debounceTime } from 'rxjs/operators';
 import { PageEvent } from '@angular/material/paginator';
 import { FADE_IN_OUT } from '@utils/animations';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 
 /**
  * `Smart component` for characters rendering
@@ -45,6 +46,8 @@ export class CharactersComponent implements OnInit {
     private readonly charactersFacade: CharactersFacade,
     private readonly comicsFacade: ComicsFacade,
     private readonly storiesFacade: StoriesFacade,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
   ) { }
 
   // tslint:disable-next-line: completed-docs
@@ -155,6 +158,15 @@ export class CharactersComponent implements OnInit {
     this.currentPage = page.pageIndex;
     this.pageSize = page.pageSize;
     this.initializeCharacters();
+  }
+
+  /**
+   * Navigate to the character detail view
+   * @param character The character
+   */
+  navigateToCharacter(character: ICharactersResponse): void {
+    this.charactersFacade.cacheCharacter(character);
+    this.router.navigate([`../${character.id}`], { relativeTo: this.route });
   }
 
 }

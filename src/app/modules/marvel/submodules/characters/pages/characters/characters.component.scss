@@ -1,11 +1,12 @@
-$table-height: calc(100vh - 222px);
+$table-height: calc(100vh - 215px);
 
 .table-container {
   max-height: $table-height;
   overflow-y: auto;
 }
 
-ma-cool-loading , ma-empty-results{
+ma-cool-loading,
+ma-empty-results {
   height: $table-height;
 }
 
@@ -26,11 +27,13 @@ ma-cool-loading , ma-empty-results{
 }
 
 .filtering-bar {
+  background-color: #ffe8d1;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 0 0 10px;
-  mat-form-field, mat-slide-toggle {
+  padding: 10px 20px 10px;
+  mat-form-field,
+  mat-slide-toggle {
     display: inline-block;
     &:not(:first-child) {
       margin-left: 30px;

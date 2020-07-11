@@ -1,0 +1,78 @@
+<ng-template #loading>
+  <ma-cool-loading></ma-cool-loading>
+</ng-template>
+<ng-container *ngslAsyncHandler="stories$ | async as comics;
+  useLoading: loading">
+  <ng-template #empty>
+    <ma-empty-results></ma-empty-results>
+  </ng-template>
+  <ng-container *ngIf="(comics.payload?.results || []).length > 0; else empty">
+    <div
+      class="table-container"
+      @fadeInOut>
+      <table
+        mat-table
+        [dataSource]="comics.payload?.results || []"
+        class="characters-table mat-elevation-z8">
+
+        <ng-container matColumnDef="type">
+          <th
+            mat-header-cell
+            *matHeaderCellDef>
+            Type
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element">
+            {{ element.type | titlecase }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="title">
+          <th
+            class="name-spacing"
+            mat-header-cell
+            *matHeaderCellDef>
+            Name
+          </th>
+          <td
+            class="name-spacing"
+            mat-cell
+            *matCellDef="let element">
+            {{ element.title }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <th
+            mat-header-cell
+            *matHeaderCellDef>
+            Description
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            style="max-width: 400px;">
+            {{ (element.description | truncate:150) || 'No description' }}
+          </td>
+        </ng-container>
+
+        <tbody>
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns;"></tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+</ng-container>
+
+<mat-paginator
+  [length]="totalItems"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="onNewPage($event)">
+</mat-paginator>

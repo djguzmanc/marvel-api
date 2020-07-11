@@ -30,7 +30,7 @@
     </mat-autocomplete>
   </mat-form-field>
 
-  <mat-form-field>
+  <!-- <mat-form-field>
     <mat-label>Stories</mat-label>
     <mat-select
       formControlName="stories"
@@ -43,13 +43,13 @@
         (+{{stories.value.length - 1}} {{stories.value?.length === 2 ? 'other' : 'others'}})
       </span>
       </mat-select-trigger>
-      <!-- <mat-option
+      <mat-option
         *ngFor="let topping of toppingList"
         [value]="topping">
         {{topping}}
-      </mat-option> -->
+      </mat-option>
     </mat-select>
-  </mat-form-field>
+  </mat-form-field> -->
 
   <mat-slide-toggle formControlName="nameSort">Sort by name</mat-slide-toggle>
 
@@ -161,7 +161,8 @@
             *matCellDef="let element">
             <button
               mat-icon-button
-              color="primary">
+              color="primary"
+              (click)="navigateToCharacter(element)">
               <mat-icon>visibility</mat-icon>
             </button>
           </td>

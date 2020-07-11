@@ -12,8 +12,11 @@ import { IThumbnailVariant } from '@utils/interfaces/auxiliary/thumbnail-variant
 export class SquaredThumbnailPipe implements PipeTransform {
 
   // tslint:disable-next-line: completed-docs
-  transform(thumbnail: IThumbnail, variant: IThumbnailVariant): string {
-    return `${thumbnail.path}/${variant}.${thumbnail.extension}`;
+  transform(thumbnail: IThumbnail | null, variant: IThumbnailVariant): string {
+    if (thumbnail) {
+      return `${thumbnail.path}/${variant}.${thumbnail.extension}`;
+    }
+    return '';
   }
 
 }
