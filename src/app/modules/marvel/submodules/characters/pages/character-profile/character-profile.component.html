@@ -1,0 +1,46 @@
+<ng-template #loading>
+  <ma-cool-loading></ma-cool-loading>
+</ng-template>
+
+<ng-container *ngslAsyncHandler="character$ | async as characterStream;
+  useLoading: loading">
+  <ng-container *ngIf="characterStream.payload as character">
+    <section class="top-info">
+      <img
+        [src]="character.thumbnail | thumbnail:'portrait_uncanny'"
+        alt="Character pic"
+        class="top-info__character-pic">
+
+      <div class="top-info__detail">
+        <h2 class="detail__name">{{ character.name }}</h2>
+        <p>{{ character.description || 'No description' }}</p>
+        <div class="detail__stats">
+          <div class="stat stat--red">
+            <mat-icon>favorite</mat-icon>
+            Comics ({{ character.comics.available }})
+          </div>
+          <div class="stat stat--orange">
+            <mat-icon>grade</mat-icon>
+            Series ({{ character.series.available }})
+          </div>
+          <div class="stat stat--blue">
+            <mat-icon>extension</mat-icon>
+            Stories ({{ character.stories.available }})
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="comics-stories-container">
+      <ul mat-tab-nav-bar>
+        <li
+          *ngFor="let link of links; let i = index"
+          mat-tab-link
+          [routerLink]="link.label"
+          [active]="link.active"
+          (click)="onLinkClick(i)">{{ link.label | titlecase }}</li>
+      </ul>
+      <router-outlet></router-outlet>
+    </section>
+  </ng-container>
+</ng-container>

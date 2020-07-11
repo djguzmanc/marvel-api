@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CHARACTERS_ROUTE, CHARACTERS_INDEX } from '@utils/constants';
 
 /**
  * Marvel module wrapper
@@ -9,6 +10,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MarvelWrapperComponent implements OnInit {
 
+  readonly ALL_CHARACTERS = `${CHARACTERS_ROUTE}/${CHARACTERS_INDEX}`;
+
   // tslint:disable-next-line: completed-docs
-  ngOnInit() {}
+  ngOnInit() { }
 }
