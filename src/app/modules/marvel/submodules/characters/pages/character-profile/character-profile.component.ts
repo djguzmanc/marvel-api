@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CharactersFacade } from '@domain/application/facade';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,7 +14,7 @@ import { EntityProfile } from '@utils/classes';
   templateUrl: './character-profile.component.html',
   styleUrls: ['./character-profile.component.scss']
 })
-export class CharacterProfileComponent extends EntityProfile implements OnInit {
+export class CharacterProfileComponent extends EntityProfile implements OnInit, OnDestroy {
 
   character$!: Observable<IFacadeApiMap<ICharactersResponse>>;
 
@@ -28,5 +28,10 @@ export class CharacterProfileComponent extends EntityProfile implements OnInit {
   ngOnInit(): void {
     this.character$ = this.characterFacade.getById(this.route.snapshot.params[CHARACTERS_DETAIL]);
     this.initializeRoutes(this.router, COMICS_ROUTE, STORIES_ROUTE);
+  }
+
+  // tslint:disable-next-line: completed-docs
+  ngOnDestroy(): void {
+    this.subsink.unsubscribe();
   }
 }

@@ -50,8 +50,7 @@
             *ngFor="let link of links; let i = index"
             mat-tab-link
             [routerLink]="link.label"
-            [active]="link.active"
-            (click)="onLinkClick(i)">{{ link.label | titlecase }}</li>
+            [active]="link.active">{{ link.label | titlecase }}</li>
         </ul>
         <router-outlet></router-outlet>
       </div>

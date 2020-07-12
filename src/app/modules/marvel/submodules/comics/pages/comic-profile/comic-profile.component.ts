@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CHARACTERS_ROUTE, STORIES_ROUTE, COMICS_DETAIL } from '@utils/constants';
 import { IComicsResponse } from '@utils/interfaces/response';
 import { Observable } from 'rxjs';
@@ -15,7 +15,7 @@ import { EntityProfile } from '@utils/classes';
   templateUrl: './comic-profile.component.html',
   styleUrls: ['./comic-profile.component.scss']
 })
-export class ComicProfileComponent extends EntityProfile implements OnInit {
+export class ComicProfileComponent extends EntityProfile implements OnInit, OnDestroy {
 
   slideConfig = { arrows: true, dots: true, slidesToShow: 1, slidesToScroll: 1 };
 
@@ -31,5 +31,10 @@ export class ComicProfileComponent extends EntityProfile implements OnInit {
   ngOnInit(): void {
     this.comic$ = this.comicsFacade.getById(this.route.snapshot.params[COMICS_DETAIL]);
     this.initializeRoutes(this.router, CHARACTERS_ROUTE, STORIES_ROUTE);
+  }
+
+  // tslint:disable-next-line: completed-docs
+  ngOnDestroy(): void {
+    this.subsink.unsubscribe();
   }
 }
