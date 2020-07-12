@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
  */
 export const errorHandler = (err: any): Observable<{ err: string }> => {
   if (err instanceof HttpErrorResponse) {
-    return of({ err: err.error.status });
+    return of({ err: err.error.status || 'Unspecified error' });
   }
   return of({ err: 'Unexpected error' });
 };
