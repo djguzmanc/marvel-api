@@ -1,9 +1,12 @@
 <ng-template #loading>
   <ma-cool-loading></ma-cool-loading>
 </ng-template>
-
+<ng-template #error let-errorContent>
+  <ma-error [message]="errorContent"></ma-error>
+</ng-template>
 <ng-container *ngslAsyncHandler="character$ | async as characterStream;
-  useLoading: loading">
+  useLoading: loading;
+  useError: error">
   <ng-container *ngIf="characterStream.payload as character">
     <section class="top-info">
       <img
