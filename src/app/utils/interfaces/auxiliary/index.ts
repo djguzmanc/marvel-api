@@ -8,3 +8,4 @@ export * from './characters-options.interface';
 export * from './comic-filter.interface';
 export * from './comics-options.interface';
 export * from './stories-options.interface';
+export * from './bookmark.interface';

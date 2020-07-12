@@ -11,7 +11,23 @@
       <span class="title__api">API</span>
     </div>
     <ul class="nav">
-      <li matRipple>Bookmarks</li>
+      <li
+        matRipple
+        [routerLink]="BOOKMARKS"
+        routerLinkActive="active">
+        <ng-container *ngIf="bookmarks$ | async | keyvalue as bookmarks">
+          <ng-container *ngIf="bookmarks.length > 0; else empty">
+            <span
+              [matBadge]="bookmarks.length + ''"
+              matBadgeOverlap="false"
+              matBadgeColor="accent">
+              Bookmarks
+            </span>
+          </ng-container>
+          <ng-template #empty><span>Bookmarks</span>
+          </ng-template>
+        </ng-container>
+      </li>
       <li
         matRipple
         [routerLink]="ALL_CHARACTERS"

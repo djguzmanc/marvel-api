@@ -41,25 +41,19 @@ export abstract class EntityList<T> {
     src?: Observable<IFacadeApiMap<IMarvelCollection<T>>>;
     bind?: (options: IPaginationOptions) => Observable<IFacadeApiMap<IMarvelCollection<T>>>;
   } = {}): void {
-    let obs$;
+    const obs$ = bind ? bind({
+      limit: this.pageSize,
+      offset: this.pageSize * this.currentPage,
+    }) : src;
 
-    if (bind) {
-      obs$ = bind({
-        limit: this.pageSize,
-        offset: this.pageSize * this.currentPage,
-      });
-    } else if (src) {
-      obs$ = src.pipe(
+    if (obs$) {
+      this.collection$ = obs$.pipe(
         tap(res => {
           if (res.payload) {
             this.totalItems = res.payload.total;
           }
         })
       );
-    }
-
-    if (obs$) {
-      this.collection$ = obs$;
     }
   }
 }

@@ -6,6 +6,8 @@ import { IFacadeApiMap } from '@utils/interfaces/auxiliary';
 import { StoriesFacade } from '@domain/application/facade';
 import { ActivatedRoute, Router } from '@angular/router';
 import { STORIES_DETAIL, COMICS_ROUTE, CHARACTERS_ROUTE } from '@utils/constants';
+import { BookmarksFacade } from '@domain/application/facade/bookmarks/bookmarks.facade';
+import { MarvelEntity } from '@domain/model/enums';
 
 /**
  * `Smart component` for displaying a story
@@ -17,18 +19,20 @@ import { STORIES_DETAIL, COMICS_ROUTE, CHARACTERS_ROUTE } from '@utils/constants
 })
 export class StoryProfileComponent extends EntityProfile implements OnInit, OnDestroy {
 
+  readonly type = MarvelEntity.STORIES;
   story$!: Observable<IFacadeApiMap<IStoriesResponse>>;
 
   constructor(
     private readonly storiesFacade: StoriesFacade,
     private readonly route: ActivatedRoute,
-    private readonly router: Router
-  ) { super(); }
+    public readonly router: Router,
+    public readonly bookmarksFacade: BookmarksFacade
+  ) { super(router, bookmarksFacade); }
 
   // tslint:disable-next-line: completed-docs
   ngOnInit(): void {
     this.story$ = this.storiesFacade.getById(this.route.snapshot.params[STORIES_DETAIL]);
-    this.initializeRoutes(this.router, CHARACTERS_ROUTE, COMICS_ROUTE);
+    this.initializeRoutes(CHARACTERS_ROUTE, COMICS_ROUTE);
   }
 
   // tslint:disable-next-line: completed-docs

@@ -47,3 +47,13 @@ export const STORIES_ROUTE = 'stories';
  * Stories detail route
  */
 export const STORIES_DETAIL = 'storiesId';
+
+// Bookmarks routes
+/**
+ * Bookmarks module base route
+ */
+export const BOOKMARKS_ROUTE = 'bookmarks';
+/**
+ * All bookmarks route
+ */
+export const BOOKMARKS_INDEX = 'all';

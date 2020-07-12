@@ -28,6 +28,13 @@
   margin-top: 25px;
 }
 
+.detail__name {
+  mat-icon {
+    cursor: pointer;
+    vertical-align: middle;
+  }
+}
+
 .stat {
   margin: 10px 0;
   vertical-align: middle;

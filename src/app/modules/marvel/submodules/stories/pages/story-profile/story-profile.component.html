@@ -7,7 +7,15 @@
   <ng-container *ngIf="storyStream.payload as story">
     <section class="top-info">
       <div class="top-info__detail">
-        <h2 class="detail__name">{{ story.title }}</h2>
+        <h2 class="detail__name stat--orange">
+          {{ story.title }}
+          <ng-container *ngIf="isBookmarked$ | async; else notBookmarked">
+            <mat-icon (click)="removeBookmark()">bookmark</mat-icon>
+          </ng-container>
+          <ng-template #notBookmarked>
+            <mat-icon (click)="addBookmark(type, story.title)">bookmark_border</mat-icon>
+          </ng-template>
+        </h2>
         <p>{{ story.description || 'No description' }}</p>
         <div class="detail__stats">
           <div class="stat stat--red">
