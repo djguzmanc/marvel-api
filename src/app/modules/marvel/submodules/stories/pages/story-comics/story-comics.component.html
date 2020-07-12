@@ -1,1 +1,24 @@
-<p>story-comics works!</p>
+<ng-template #loading>
+  <ma-cool-loading></ma-cool-loading>
+</ng-template>
+
+<ng-container *ngslAsyncHandler="collection$ | async as comicsStream;
+  useLoading: loading">
+  <ng-template #empty>
+    <ma-empty-results></ma-empty-results>
+  </ng-template>
+  <ng-container *ngIf="comicsStream.payload as comicsCollection">
+    <ng-container *ngIf="comicsCollection.results.length > 0; else empty">
+      <ma-comics-table
+        maxHeight="calc(100vh - 492px)"
+        [items]="comicsCollection.results"></ma-comics-table>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<mat-paginator
+  [length]="totalItems"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="onNewPage($event)">
+</mat-paginator>

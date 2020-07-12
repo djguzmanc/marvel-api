@@ -35,7 +35,7 @@ export class StoriesFacade implements IStoriesController {
     return this.api.getSubCollection<ICharactersResponse>(
       characterId,
       this.entityName,
-      MarvelEntity.STORIES,
+      MarvelEntity.CHARACTERS,
       options
     ).pipe(
       map(res => ({ payload: res.data })),
