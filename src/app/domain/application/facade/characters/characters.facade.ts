@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ICharactersController } from '@utils/interfaces/controller';
-import { CharactersApiService } from '@domain/infrastructure/api';
+import { MasterApiService } from '@domain/infrastructure/api';
 import { Observable, of } from 'rxjs';
 import { IFacadeApiMap, IPaginationOptions, ICharactersOptions } from '@utils/interfaces/auxiliary';
 import { IMarvelCollection } from '@utils/interfaces/auxiliary';
@@ -8,6 +8,7 @@ import { ICharactersResponse, IComicsResponse, IStoriesResponse } from '@utils/i
 import { map, catchError, switchMap, take } from 'rxjs/operators';
 import { errorHandler } from '@utils/functions';
 import { CharacterService } from '@domain/application/observable-services';
+import { MarvelEntity } from '@domain/model/enums';
 
 /**
  * Handles all data consumption for
@@ -18,8 +19,10 @@ import { CharacterService } from '@domain/application/observable-services';
 })
 export class CharactersFacade implements ICharactersController {
 
+  private readonly entityName = MarvelEntity.CHARACTERS;
+
   constructor(
-    private readonly api: CharactersApiService,
+    private readonly api: MasterApiService<ICharactersResponse>,
     private readonly characterOs: CharacterService
   ) { }
 
@@ -30,7 +33,12 @@ export class CharactersFacade implements ICharactersController {
    */
   getStoriesByCharacter(characterId: number, options: Partial<IPaginationOptions>):
     Observable<IFacadeApiMap<IMarvelCollection<IStoriesResponse>>> {
-    return this.api.getStoriesByCharacter(characterId, options).pipe(
+    return this.api.getSubCollection<IStoriesResponse>(
+      characterId,
+      this.entityName,
+      MarvelEntity.STORIES,
+      options
+    ).pipe(
       map(res => ({ payload: res.data })),
       catchError(err => errorHandler(err))
     );
@@ -43,7 +51,12 @@ export class CharactersFacade implements ICharactersController {
    */
   getComicsByCharacter(characterId: number, options: Partial<IPaginationOptions>):
     Observable<IFacadeApiMap<IMarvelCollection<IComicsResponse>>> {
-    return this.api.getComicsByCharacter(characterId, options).pipe(
+    return this.api.getSubCollection<IComicsResponse>(
+      characterId,
+      this.entityName,
+      MarvelEntity.COMICS,
+      options
+    ).pipe(
       map(res => ({ payload: res.data })),
       catchError(err => errorHandler(err))
     );
@@ -59,7 +72,7 @@ export class CharactersFacade implements ICharactersController {
         if (res) {
           return of(res);
         }
-        return this.api.getById(id).pipe(
+        return this.api.getById(id, this.entityName).pipe(
           map(apiRes => apiRes.data.results[0])
         );
       }),
@@ -75,7 +88,7 @@ export class CharactersFacade implements ICharactersController {
    */
   getAll(options: Partial<IPaginationOptions & ICharactersOptions>):
     Observable<IFacadeApiMap<IMarvelCollection<ICharactersResponse>>> {
-    return this.api.getAll(options).pipe(
+    return this.api.getAll(this.entityName, options).pipe(
       map(res => ({ payload: res.data })),
       catchError(err => errorHandler(err))
     );
