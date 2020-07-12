@@ -1,6 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
 import { MarvelWrapperComponent } from './wrapper/marvel-wrapper.component';
-import { CHARACTERS_ROUTE } from '@utils/constants';
+import { CHARACTERS_ROUTE, COMICS_ROUTE } from '@utils/constants';
 
 /**
  * Marvel routes
@@ -17,6 +17,10 @@ const routes: Routes = [
       {
         path: CHARACTERS_ROUTE,
         loadChildren: () => import('./submodules/characters/characters.module').then(m => m.CharactersModule)
+      },
+      {
+        path: COMICS_ROUTE,
+        loadChildren: () => import('./submodules/comics/comics.module').then(m => m.ComicsModule)
       }
     ]
   }

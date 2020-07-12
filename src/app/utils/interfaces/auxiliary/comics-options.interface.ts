@@ -1,5 +1,6 @@
 /**
- * TODO: Document IComicsOptions purpose
+ * Describes the filtering options for comics
+ * response
  */
 export interface IComicsOptions {
   titleStartsWith: string;

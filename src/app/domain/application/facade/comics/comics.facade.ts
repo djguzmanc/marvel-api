@@ -3,9 +3,10 @@ import { IComicsController } from '@utils/interfaces/controller';
 import { ComicsApiService } from '@domain/infrastructure/api';
 import { IPaginationOptions, IFacadeApiMap, IMarvelCollection, IComicFilter, IComicsOptions } from '@utils/interfaces/auxiliary';
 import { Observable } from 'rxjs';
-import { IComicsResponse } from '@utils/interfaces/response';
+import { IComicsResponse, IStoriesResponse, ICharactersResponse } from '@utils/interfaces/response';
 import { map, catchError } from 'rxjs/operators';
 import { errorHandler } from '@utils/functions';
+import { ComicsService } from '@domain/application/observable-services';
 
 /**
  * Handles all data consumption for
@@ -17,8 +18,46 @@ import { errorHandler } from '@utils/functions';
 export class ComicsFacade implements IComicsController {
 
   constructor(
-    private readonly api: ComicsApiService
+    private readonly api: ComicsApiService,
+    private readonly comicOs: ComicsService
   ) { }
+
+  /**
+   * Handles the characters by comic request
+   * @param comicId Comic id
+   * @param options Filtering options
+   */
+  getCharactersByComic(comicId: number, options: Partial<IPaginationOptions>):
+    Observable<IFacadeApiMap<IMarvelCollection<ICharactersResponse>>> {
+    return this.api.getCharactersByComic(comicId, options).pipe(
+      map(res => ({ payload: res.data })),
+      catchError(err => errorHandler(err))
+    );
+  }
+
+  /**
+   * Handles the stories by comic request
+   * @param comicId Comic id
+   * @param options Filtering options
+   */
+  getStoriesByComic(comicId: number, options: Partial<IPaginationOptions>):
+    Observable<IFacadeApiMap<IMarvelCollection<IStoriesResponse>>> {
+    return this.api.getStoriesByComic(comicId, options).pipe(
+      map(res => ({ payload: res.data })),
+      catchError(err => errorHandler(err))
+    );
+  }
+
+  /**
+   * Handles the comic by id request
+   * @param id Comic id
+   */
+  getById(id: number): Observable<IFacadeApiMap<IComicsResponse>> {
+    return this.api.getById(id).pipe(
+      map(res => ({ payload: res.data.results[0] })),
+      catchError(err => errorHandler(err))
+    );
+  }
 
   /**
    * Handles the comics request
@@ -56,6 +95,14 @@ export class ComicsFacade implements IComicsController {
         }
       })
     );
+  }
+
+  /**
+   * Caches a comic
+   * @param comic The comic to cache
+   */
+  cacheComic(comic: IComicsResponse): void {
+    this.comicOs.cacheComic(comic);
   }
 
 }

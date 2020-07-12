@@ -1,0 +1,79 @@
+<div
+  [formGroup]="filterForm"
+  class="filtering-bar">
+  <mat-form-field>
+    <mat-label>Filter by title</mat-label>
+    <input
+      formControlName="title"
+      matInput
+      type="search"
+      placeholder="Avengers Ultimate">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Issue number</mat-label>
+    <input
+      formControlName="issueNumber"
+      matInput
+      type="search"
+      placeholder="2008">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Format</mat-label>
+    <mat-select formControlName="format">
+      <mat-option
+        *ngFor="let format of formatOptions"
+        [value]="format">
+        {{ format }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-slide-toggle formControlName="issueSort">Sort by issue number</mat-slide-toggle>
+
+  <div class="filter-actions">
+    <button
+      (click)="clearFilters()"
+      class="delete-icon"
+      *ngIf="filterForm.dirty"
+      mat-icon-button
+      color="warn">
+      <mat-icon>delete</mat-icon>
+    </button>
+
+    <button
+      class="filter-button"
+      mat-raised-button
+      color="primary"
+      (click)="applyFilters(filterForm)">
+      Filter characters
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+</div>
+
+<ng-template #loading>
+  <ma-cool-loading></ma-cool-loading>
+</ng-template>
+<ng-container *ngslAsyncHandler="comics$ | async as comicsStream;
+  useLoading: loading">
+  <ng-template #empty>
+    <ma-empty-results></ma-empty-results>
+  </ng-template>
+  <ng-container *ngIf="comicsStream.payload as comicsCollection">
+    <ng-container *ngIf="comicsCollection.results.length > 0; else empty">
+      <ma-comics-table
+        maxHeight="calc(100vh - 215px)"
+        [items]="comicsCollection.results"></ma-comics-table>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<mat-paginator
+  [length]="totalItems"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="onNewPage($event)">
+</mat-paginator>

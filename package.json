@@ -22,8 +22,11 @@
     "@angular/platform-browser-dynamic": "~9.1.4",
     "@angular/router": "~9.1.4",
     "@ngsl/components": "0.0.18",
+    "jquery": "^3.5.1",
     "ng-mat-select-infinite-scroll": "^2.0.0",
+    "ngx-slick-carousel": "^0.5.1",
     "rxjs": "~6.5.4",
+    "slick-carousel": "^1.8.1",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },

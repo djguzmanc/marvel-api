@@ -5,9 +5,9 @@ import { CHARACTERS_DETAIL } from '@utils/constants';
 import { IFacadeApiMap, IMarvelCollection } from '@utils/interfaces/auxiliary';
 import { IComicsResponse } from '@utils/interfaces/response';
 import { Observable } from 'rxjs';
-import { PageEvent } from '@angular/material/paginator';
 import { FADE_IN_OUT } from '@utils/animations';
 import { tap } from 'rxjs/operators';
+import { EntityList } from '@utils/classes';
 
 /**
  * `Smart component` for displaying the comics
@@ -20,31 +20,24 @@ import { tap } from 'rxjs/operators';
     FADE_IN_OUT
   ]
 })
-export class CharacterComicsComponent implements OnInit {
-
-  totalItems!: number;
-  pageSize: number = 20;
-  pageSizeOptions = [10, 20, 40, 80, 100];
-  currentPage: number = 0;
+export class CharacterComicsComponent extends EntityList implements OnInit {
 
   comics$!: Observable<IFacadeApiMap<IMarvelCollection<IComicsResponse>>>;
-
-  displayedColumns: string[] = ['thumbnail', 'title', 'description'];
 
   constructor(
     private readonly charactersFacade: CharactersFacade,
     private readonly route: ActivatedRoute
-  ) { }
+  ) { super(); }
 
   // tslint:disable-next-line: completed-docs
   ngOnInit(): void {
-    this.initializeComics();
+    this.initializeEntity();
   }
 
   /**
    * Initializes comics data
    */
-  initializeComics(): void {
+  initializeEntity(): void {
     const id = this.route.parent?.snapshot.params[CHARACTERS_DETAIL];
     if (id) {
       this.comics$ = this.charactersFacade.getComicsByCharacter(id, {
@@ -59,15 +52,4 @@ export class CharacterComicsComponent implements OnInit {
       );
     }
   }
-
-  /**
-   * Handles a new page event
-   * @param page Page event
-   */
-  onNewPage(page: PageEvent): void {
-    this.currentPage = page.pageIndex;
-    this.pageSize = page.pageSize;
-    this.initializeComics();
-  }
-
 }

@@ -1,0 +1,7 @@
+@import 'material-palette';
+
+.slick-arrow {
+  &::before {
+    color: map-get($md-primary, 700) !important;
+  }
+}

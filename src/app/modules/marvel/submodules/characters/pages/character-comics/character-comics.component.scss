@@ -1,26 +1,5 @@
 $table-height: calc(100vh - 492px);
 
-.table-container {
-  max-height: $table-height;
-  overflow-y: auto;
-}
-
 ma-cool-loading , ma-empty-results{
   height: $table-height;
-}
-
-.characters-table {
-  display: table;
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 100%;
-}
-
-.thumbnail-td {
-  padding: 10px 0 0;
-  width: 70px;
-}
-
-.name-spacing {
-  padding-left: 30px;
 }
