@@ -1,3 +1,4 @@
+import { ErrorComponent } from './error/error.component';
 import { EntityTableComponent } from './entity-table/entity-table.component';
 import { StoriesTableComponent } from './stories-table/stories-table.component';
 import { ComicsTableComponent } from './comics-table/comics-table.component';
@@ -11,9 +12,11 @@ export const MARVEL_UI_COMPONENTS: any[] = [
   ComicsTableComponent,
   StoriesTableComponent,
   EntityTableComponent,
+  ErrorComponent,
 ];
 
 export * from './characters-table/characters-table.component';
 export * from './comics-table/comics-table.component';
 export * from './stories-table/stories-table.component';
 export * from './entity-table/entity-table.component';
+export * from './error/error.component';

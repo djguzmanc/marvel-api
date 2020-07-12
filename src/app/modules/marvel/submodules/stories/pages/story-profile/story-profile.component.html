@@ -1,9 +1,12 @@
 <ng-template #loading>
   <ma-cool-loading></ma-cool-loading>
 </ng-template>
-
+<ng-template #error let-errorContent>
+  <ma-error [message]="errorContent"></ma-error>
+</ng-template>
 <ng-container *ngslAsyncHandler="story$ | async as storyStream;
-  useLoading: loading">
+  useLoading: loading;
+  useError: error">
   <ng-container *ngIf="storyStream.payload as story">
     <section class="top-info">
       <div class="top-info__detail top-info__detail--no-margin">
