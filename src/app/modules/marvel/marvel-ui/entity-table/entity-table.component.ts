@@ -6,12 +6,18 @@ import { Component, Input } from '@angular/core';
 @Component({
   template: ''
 })
-export class EntityTableComponent<T> {
+export abstract class EntityTableComponent<T> {
 
   @Input()
   maxHeight!: string;
 
   @Input()
   items: T[] = [];
+
+  /**
+   * Navigate to the item detail view
+   * @param item The clicked item
+   */
+  abstract navigate(item: T): void;
 
 }
