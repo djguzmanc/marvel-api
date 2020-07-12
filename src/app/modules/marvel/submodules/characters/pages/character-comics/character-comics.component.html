@@ -1,73 +1,18 @@
 <ng-template #loading>
   <ma-cool-loading></ma-cool-loading>
 </ng-template>
-<ng-container *ngslAsyncHandler="comics$ | async as comics;
+
+<ng-container *ngslAsyncHandler="comics$ | async as comicsStream;
   useLoading: loading">
   <ng-template #empty>
     <ma-empty-results></ma-empty-results>
   </ng-template>
-  <ng-container *ngIf="(comics.payload?.results || []).length > 0; else empty">
-    <div
-      class="table-container"
-      @fadeInOut>
-      <table
-        mat-table
-        [dataSource]="comics.payload?.results || []"
-        class="characters-table mat-elevation-z8">
-
-        <ng-container matColumnDef="thumbnail">
-          <th
-            mat-header-cell
-            *matHeaderCellDef>
-          </th>
-          <td
-            mat-cell
-            *matCellDef="let element"
-            class="thumbnail-td">
-            <img
-              [src]="element.thumbnail | thumbnail:'standard_small'"
-              alt="{{ element.name }} Thumbnail">
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="title">
-          <th
-            class="name-spacing"
-            mat-header-cell
-            *matHeaderCellDef>
-            Name
-          </th>
-          <td
-            class="name-spacing"
-            mat-cell
-            *matCellDef="let element">
-            {{ element.title }}
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="description">
-          <th
-            mat-header-cell
-            *matHeaderCellDef>
-            Description
-          </th>
-          <td
-            mat-cell
-            *matCellDef="let element">
-            {{ (element.description | truncate:100) || 'No description' }}
-          </td>
-        </ng-container>
-
-        <tbody>
-          <tr
-            mat-header-row
-            *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-          <tr
-            mat-row
-            *matRowDef="let row; columns: displayedColumns;"></tr>
-        </tbody>
-      </table>
-    </div>
+  <ng-container *ngIf="comicsStream.payload as comicsCollection">
+    <ng-container *ngIf="comicsCollection.results.length > 0; else empty">
+      <ma-comics-table
+        maxHeight="calc(100vh - 492px)"
+        [items]="comicsCollection.results"></ma-comics-table>
+    </ng-container>
   </ng-container>
 </ng-container>
 

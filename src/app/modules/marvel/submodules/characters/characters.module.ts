@@ -5,6 +5,7 @@ import { SharedModule } from '@custom-modules/shared.module';
 import { UiModule } from '@modules/shared/ui/ui.module';
 import { SharedPipesModule } from '@modules/shared/pipes/shared-pipes.module';
 import { NgslAsyncHandlerModule } from '@ngsl/components';
+import { MarvelUiModule } from '@modules/marvel/marvel-ui/marvel-ui.module';
 
 /**
  * Characters Module
@@ -14,6 +15,7 @@ import { NgslAsyncHandlerModule } from '@ngsl/components';
   imports: [
     SharedModule,
     UiModule,
+    MarvelUiModule,
     SharedPipesModule,
     NgslAsyncHandlerModule,
     CHARACTERS_ROUTES

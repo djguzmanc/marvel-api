@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { CharactersFacade, ComicsFacade, StoriesFacade } from '@domain/application/facade';
+import { CharactersFacade, ComicsFacade } from '@domain/application/facade';
 import { Observable } from 'rxjs';
 import { IFacadeApiMap, IMarvelCollection, ICharactersOptions, IComicFilter } from '@utils/interfaces/auxiliary';
 import { ICharactersResponse } from '@utils/interfaces/response';
 import { tap, switchMap, filter, debounceTime } from 'rxjs/operators';
-import { PageEvent } from '@angular/material/paginator';
 import { FADE_IN_OUT } from '@utils/animations';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { EntityList } from '@utils/classes';
 
 /**
  * `Smart component` for characters rendering
@@ -19,17 +18,10 @@ import { Router, ActivatedRoute } from '@angular/router';
     FADE_IN_OUT
   ]
 })
-export class CharactersComponent implements OnInit {
-
-  totalItems!: number;
-  pageSize: number = 20;
-  pageSizeOptions = [10, 20, 40, 80, 100];
-  currentPage: number = 0;
+export class CharactersComponent extends EntityList implements OnInit {
 
   characters$!: Observable<IFacadeApiMap<IMarvelCollection<ICharactersResponse>>>;
   comics$!: Observable<IFacadeApiMap<IMarvelCollection<IComicFilter>>>;
-
-  displayedColumns: string[] = ['thumbnail', 'name', 'description', 'actions'];
 
   comicFilter = new FormControl();
 
@@ -45,16 +37,12 @@ export class CharactersComponent implements OnInit {
   constructor(
     private readonly charactersFacade: CharactersFacade,
     private readonly comicsFacade: ComicsFacade,
-    private readonly storiesFacade: StoriesFacade,
-    private readonly router: Router,
-    private readonly route: ActivatedRoute,
-  ) { }
+  ) { super(); }
 
   // tslint:disable-next-line: completed-docs
   ngOnInit(): void {
-    this.initializeCharacters();
+    this.initializeEntity();
     this.getNextComics();
-    this.storiesFacade.getAll({}).subscribe();
   }
 
   /**
@@ -107,7 +95,7 @@ export class CharactersComponent implements OnInit {
    * @param resetPage If set to true reset the
    * page index to 0
    */
-  initializeCharacters(resetPage: boolean = false): void {
+  initializeEntity(resetPage: boolean = false): void {
     if (resetPage) {
       this.currentPage = 0;
     }
@@ -147,26 +135,6 @@ export class CharactersComponent implements OnInit {
       stories: formValue.stories,
       orderBy: formValue.nameSort ? 'name' : '-name',
     };
-    this.initializeCharacters(true);
+    this.initializeEntity(true);
   }
-
-  /**
-   * Handles a new page event
-   * @param page Page event
-   */
-  onNewPage(page: PageEvent): void {
-    this.currentPage = page.pageIndex;
-    this.pageSize = page.pageSize;
-    this.initializeCharacters();
-  }
-
-  /**
-   * Navigate to the character detail view
-   * @param character The character
-   */
-  navigateToCharacter(character: ICharactersResponse): void {
-    this.charactersFacade.cacheCharacter(character);
-    this.router.navigate([`../${character.id}`], { relativeTo: this.route });
-  }
-
 }

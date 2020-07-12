@@ -30,8 +30,7 @@ export class CharactersApiService implements ICharactersController {
     return this.http.get<IMarvelResponse<IMarvelCollection<IStoriesResponse>>>(
       `/characters/${characterId}/stories`, {
       params: parseParams(options)
-    }
-    );
+    });
   }
 
   /**
@@ -43,9 +42,8 @@ export class CharactersApiService implements ICharactersController {
     Observable<IMarvelResponse<IMarvelCollection<IComicsResponse>>> {
     return this.http.get<IMarvelResponse<IMarvelCollection<IComicsResponse>>>(
       `/characters/${characterId}/comics`, {
-        params: parseParams(options)
-      }
-    );
+      params: parseParams(options)
+    });
   }
 
   /**

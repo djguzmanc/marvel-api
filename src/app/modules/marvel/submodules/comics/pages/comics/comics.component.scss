@@ -1,0 +1,50 @@
+$table-height: calc(100vh - 215px);
+
+.table-container {
+  max-height: $table-height;
+  overflow-y: auto;
+}
+
+ma-cool-loading,
+ma-empty-results {
+  height: $table-height;
+}
+
+.characters-table {
+  display: table;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.thumbnail-td {
+  padding: 10px 0 0;
+  width: 70px;
+}
+
+.name-spacing {
+  padding-left: 30px;
+}
+
+.filtering-bar {
+  background-color: #ffe8d1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px 20px 10px;
+  mat-form-field,
+  mat-slide-toggle {
+    display: inline-block;
+    &:not(:first-child) {
+      margin-left: 30px;
+    }
+  }
+  .filter-actions {
+    display: inline-block;
+    margin-left: auto;
+  }
+}
+
+.comics {
+  margin: 0 0 20px;
+}

@@ -20,15 +20,23 @@ export const CHARACTERS_ROUTE = 'characters';
  */
 export const CHARACTERS_INDEX = 'all';
 /**
- * All characters route
+ * Character detail route
  */
-export const CHARACTERS_DETAIL = 'id';
+export const CHARACTERS_DETAIL = 'characterId';
 
 // Marvel comics routes
 /**
  * Marvel comics module base route
  */
 export const COMICS_ROUTE = 'comics';
+/**
+ * All comics route
+ */
+export const COMICS_INDEX = 'all';
+/**
+ * Comic detail route
+ */
+export const COMICS_DETAIL = 'comicId';
 
 // Marvel stories routes
 /**
