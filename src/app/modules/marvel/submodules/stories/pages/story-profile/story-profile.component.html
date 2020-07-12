@@ -6,7 +6,7 @@
   useLoading: loading">
   <ng-container *ngIf="storyStream.payload as story">
     <section class="top-info">
-      <div class="top-info__detail">
+      <div class="top-info__detail top-info__detail--no-margin">
         <h2 class="detail__name stat--orange">
           {{ story.title }}
           <ng-container *ngIf="isBookmarked$ | async; else notBookmarked">

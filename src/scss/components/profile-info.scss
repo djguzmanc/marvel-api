@@ -1,0 +1,94 @@
+@import "material-palette";
+
+.top-info {
+  color: white;
+  background-color: #2b2b2b;
+  box-shadow: 0px 9px 12px -4px #565656;
+  padding: 20px;
+  display: flex;
+  top: 0;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: sticky;
+  z-index: 1000;
+}
+
+.top-info__thumbnail {
+  margin: 0 15px 0 35px;
+  width: 150px;
+}
+
+.top-info__detail {
+  margin-left: 30px;
+  width: 100%;
+  max-width: 700px;
+}
+
+.top-info__detail--no-margin {
+  margin-left: 0;
+}
+
+.detail__stats {
+  margin-top: 25px;
+}
+
+.detail__name {
+  mat-icon {
+    cursor: pointer;
+    vertical-align: middle;
+  }
+}
+
+.stat {
+  margin: 10px 0;
+  vertical-align: middle;
+  mat-icon {
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+}
+
+.stat--red {
+  mat-icon {
+    color: map-get($md-primary, 700);
+  }
+}
+
+.stat--orange {
+  mat-icon {
+    color: map-get($md-accent, 700);
+  }
+}
+
+.stat--blue {
+  mat-icon {
+    color: #2682af;
+  }
+}
+
+.bottom-content {
+  align-items: flex-start;
+  display: flex;
+  justify-content: center;
+}
+
+.images-carousel {
+  padding: 0 40px;
+  margin-top: 25px;
+  width: 300px;
+  text-align: center;
+}
+
+.entities-container {
+  width: 100%;
+}
+
+.slide {
+  outline: none;
+}
+
+.slide__image {
+  margin: 0 auto;
+  display: block;
+  width: 210px;
+}
