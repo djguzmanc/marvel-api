@@ -12,6 +12,7 @@ import { MatSelectInfiniteScrollModule } from 'ng-mat-select-infinite-scroll';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatBadgeModule } from '@angular/material/badge';
 
 /**
  * Modules to export
@@ -29,7 +30,8 @@ const modules = [
   MatSelectInfiniteScrollModule,
   MatAutocompleteModule,
   MatChipsModule,
-  MatTabsModule
+  MatTabsModule,
+  MatBadgeModule
 ];
 
 /**

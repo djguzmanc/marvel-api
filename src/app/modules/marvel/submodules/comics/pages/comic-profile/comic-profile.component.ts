@@ -6,6 +6,8 @@ import { IFacadeApiMap } from '@utils/interfaces/auxiliary';
 import { ComicsFacade } from '@domain/application/facade';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EntityProfile } from '@utils/classes';
+import { BookmarksFacade } from '@domain/application/facade/bookmarks/bookmarks.facade';
+import { MarvelEntity } from '@domain/model/enums';
 
 /**
  * `Smart component` for displaying the comic
@@ -19,18 +21,20 @@ export class ComicProfileComponent extends EntityProfile implements OnInit, OnDe
 
   slideConfig = { arrows: true, dots: true, slidesToShow: 1, slidesToScroll: 1 };
 
+  readonly type = MarvelEntity.COMICS;
   comic$!: Observable<IFacadeApiMap<IComicsResponse>>;
 
   constructor(
     private readonly comicsFacade: ComicsFacade,
     private readonly route: ActivatedRoute,
-    private readonly router: Router
-  ) { super(); }
+    public readonly router: Router,
+    public readonly bookmarksFacade: BookmarksFacade
+  ) { super(router, bookmarksFacade); }
 
   // tslint:disable-next-line: completed-docs
   ngOnInit(): void {
     this.comic$ = this.comicsFacade.getById(this.route.snapshot.params[COMICS_DETAIL]);
-    this.initializeRoutes(this.router, CHARACTERS_ROUTE, STORIES_ROUTE);
+    this.initializeRoutes(CHARACTERS_ROUTE, STORIES_ROUTE);
   }
 
   // tslint:disable-next-line: completed-docs

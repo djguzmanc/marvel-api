@@ -1,0 +1,53 @@
+<div class="banner">
+  <h1>
+    <mat-icon>bookmark</mat-icon>
+    Bookmarks
+  </h1>
+</div>
+<div class="content">
+  <h2>
+    Here you can find your bookmarks list!. Feel free to remove them
+  </h2>
+
+  <hr>
+
+  <ng-container *ngIf="bookmarks$ | async | keyvalue as bookmarks">
+    <ng-template #empty>You have not any bookmark yet :(</ng-template>
+    <ng-container *ngIf="bookmarks.length > 0; else empty">
+      <ng-container *ngFor="let bookmark of bookmarks">
+        <div class="bookmark">
+          <button
+            mat-icon-button
+            (click)="removeBookmark(bookmark.key)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <strong>Type</strong>
+                </td>
+                <td>{{ bookmark.value.type }}</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Name</strong>
+                </td>
+                <td>{{ bookmark.value.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <button
+            class="bookmark__link"
+            mat-button
+            color="warn"
+            [routerLink]="bookmark.key">
+            Go there!
+            <mat-icon color="primary">favorite</mat-icon>
+          </button>
+        </div>
+        <hr>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</div>

@@ -1,6 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
 import { MarvelWrapperComponent } from './wrapper/marvel-wrapper.component';
-import { CHARACTERS_ROUTE, COMICS_ROUTE, STORIES_ROUTE } from '@utils/constants';
+import { CHARACTERS_ROUTE, COMICS_ROUTE, STORIES_ROUTE, BOOKMARKS_ROUTE } from '@utils/constants';
 
 /**
  * Marvel routes
@@ -13,6 +13,10 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: CHARACTERS_ROUTE
+      },
+      {
+        path: BOOKMARKS_ROUTE,
+        loadChildren: () => import('./submodules/bookmarks/bookmarks.module').then(m => m.BookmarksModule)
       },
       {
         path: CHARACTERS_ROUTE,
