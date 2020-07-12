@@ -1,10 +1,15 @@
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { Event as NavigationEvent } from '@angular/router';
+import { SubSink } from 'subsink';
 
 /**
  * Describes the common behavior for
  * profile components
  */
 export abstract class EntityProfile {
+
+  readonly subsink = new SubSink();
 
   links: Array<{
     label: string;
@@ -15,26 +20,39 @@ export abstract class EntityProfile {
    * Initializes routes object
    */
   initializeRoutes(router: Router, ...routes: string[]): void {
+    this.links = [];
     routes.forEach(route => this.links.push({
       label: route,
       active: false
     }));
 
-    const currentChildRoute = router.url.split('/').pop();
-    const _link = this.links.find(link => link.label === currentChildRoute);
-    if (_link) {
-      _link.active = true;
-    }
+    this.activateRoutes(router.url.split('/').pop());
+
+    this.subsink.sink = router.events.pipe(
+      filter(
+        (event: NavigationEvent) => {
+          return (event instanceof NavigationEnd);
+        }
+      )
+    ).subscribe(
+      (event: NavigationEnd) => {
+        // Check active route
+        this.activateRoutes(event.url.split('/').pop());
+      }
+    );
   }
 
   /**
-   * Updates the active link
-   * @param index The link index
+   * Initializes the active routes
+   * @param router The router instance
    */
-  onLinkClick(index: number): void {
-    if (!this.links[index].active) {
-      this.links[index].active = true;
-      this.links.forEach((link, idx) => idx !== index ? link.active = false : null);
-    }
+  activateRoutes(route?: string): void {
+    this.links.forEach(link => {
+      if (link.label === route) {
+        link.active = true;
+      } else {
+        link.active = false;
+      }
+    });
   }
 }

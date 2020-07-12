@@ -6,11 +6,6 @@
   useLoading: loading">
   <ng-container *ngIf="storyStream.payload as story">
     <section class="top-info">
-      <img
-        [src]="story.thumbnail | thumbnail:'portrait_uncanny'"
-        alt="Character pic"
-        class="top-info__character-pic">
-
       <div class="top-info__detail">
         <h2 class="detail__name">{{ story.title }}</h2>
         <p>{{ story.description || 'No description' }}</p>
@@ -37,8 +32,7 @@
           *ngFor="let link of links; let i = index"
           mat-tab-link
           [routerLink]="link.label"
-          [active]="link.active"
-          (click)="onLinkClick(i)">{{ link.label | titlecase }}</li>
+          [active]="link.active">{{ link.label | titlecase }}</li>
       </ul>
       <router-outlet></router-outlet>
     </section>
