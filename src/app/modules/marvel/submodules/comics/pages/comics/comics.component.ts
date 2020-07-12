@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ComicsFacade } from '@domain/application/facade';
 import { IComicsResponse } from '@utils/interfaces/response';
-import { IComicsOptions, IFacadeApiMap, IMarvelCollection } from '@utils/interfaces/auxiliary';
-import { Observable } from 'rxjs';
+import { IComicsOptions } from '@utils/interfaces/auxiliary';
 import { FormGroup, FormControl } from '@angular/forms';
-import { tap } from 'rxjs/operators';
 import { FADE_IN_OUT } from '@utils/animations';
 import { EntityList } from '@utils/classes';
 
@@ -19,11 +17,7 @@ import { EntityList } from '@utils/classes';
     FADE_IN_OUT
   ]
 })
-export class ComicsComponent extends EntityList implements OnInit {
-
-  comics$!: Observable<IFacadeApiMap<IMarvelCollection<IComicsResponse>>>;
-
-  displayedColumns: string[] = ['thumbnail', 'title', 'description', 'actions'];
+export class ComicsComponent extends EntityList<IComicsResponse> implements OnInit {
 
   formatOptions: Array<IComicsOptions['format']> = [
     'comic',
@@ -65,17 +59,13 @@ export class ComicsComponent extends EntityList implements OnInit {
       this.currentPage = 0;
     }
 
-    this.comics$ = this.comicsFacade.getAll({
-      limit: this.pageSize,
-      offset: this.pageSize * this.currentPage,
-      ...this.currentFilters
-    }).pipe(
-      tap(res => {
-        if (res.payload) {
-          this.totalItems = res.payload.total;
-        }
+    this.standardInit({
+      src: this.comicsFacade.getAll({
+        limit: this.pageSize,
+        offset: this.pageSize * this.currentPage,
+        ...this.currentFilters
       })
-    );
+    });
   }
 
   /**

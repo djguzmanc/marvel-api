@@ -2,7 +2,7 @@
   <ma-cool-loading></ma-cool-loading>
 </ng-template>
 
-<ng-container *ngslAsyncHandler="character$ | async as comicStream;
+<ng-container *ngslAsyncHandler="comic$ | async as comicStream;
   useLoading: loading">
   <ng-container *ngIf="comicStream.payload as comic">
     <section class="top-info">
