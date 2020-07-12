@@ -1,1 +1,46 @@
-<p>story-profile works!</p>
+<ng-template #loading>
+  <ma-cool-loading></ma-cool-loading>
+</ng-template>
+
+<ng-container *ngslAsyncHandler="story$ | async as storyStream;
+  useLoading: loading">
+  <ng-container *ngIf="storyStream.payload as story">
+    <section class="top-info">
+      <img
+        [src]="story.thumbnail | thumbnail:'portrait_uncanny'"
+        alt="Character pic"
+        class="top-info__character-pic">
+
+      <div class="top-info__detail">
+        <h2 class="detail__name">{{ story.title }}</h2>
+        <p>{{ story.description || 'No description' }}</p>
+        <div class="detail__stats">
+          <div class="stat stat--red">
+            <mat-icon>favorite</mat-icon>
+            Characters ({{ story.characters.available }})
+          </div>
+          <div class="stat stat--orange">
+            <mat-icon>grade</mat-icon>
+            Comics ({{ story.comics.available }})
+          </div>
+          <div class="stat stat--blue">
+            <mat-icon>extension</mat-icon>
+            Series ({{ story.series.available }})
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="comics-stories-container">
+      <ul mat-tab-nav-bar>
+        <li
+          *ngFor="let link of links; let i = index"
+          mat-tab-link
+          [routerLink]="link.label"
+          [active]="link.active"
+          (click)="onLinkClick(i)">{{ link.label | titlecase }}</li>
+      </ul>
+      <router-outlet></router-outlet>
+    </section>
+  </ng-container>
+</ng-container>

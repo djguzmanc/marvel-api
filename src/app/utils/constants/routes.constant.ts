@@ -43,3 +43,7 @@ export const COMICS_DETAIL = 'comicId';
  * Marvel stories module base route
  */
 export const STORIES_ROUTE = 'stories';
+/**
+ * Stories detail route
+ */
+export const STORIES_DETAIL = 'storiesId';
