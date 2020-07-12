@@ -65,7 +65,7 @@
   <ng-container *ngIf="comicsStream.payload as comicsCollection">
     <ng-container *ngIf="comicsCollection.results.length > 0; else empty">
       <ma-comics-table
-        maxHeight="calc(100vh - 215px)"
+        maxHeight="calc(100vh - 185px)"
         [items]="comicsCollection.results"></ma-comics-table>
     </ng-container>
   </ng-container>

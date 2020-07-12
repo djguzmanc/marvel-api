@@ -53,19 +53,19 @@
   </div>
 </div>
 
-<div
-  class="comics"
-  *ngIf="filterForm.get('comics')?.value as comics">
-  <mat-chip-list>
-    <mat-chip
-      *ngFor="let comic of comics"
-      (click)="onComicChipClick(comic)"
-      color="accent"
-      selected>
-      {{ comic.label }}
-    </mat-chip>
-  </mat-chip-list>
-</div>
+<ng-container *ngIf="filterForm.get('comics')?.value as comics">
+  <div *ngIf="comics.length > 0" class="comics">
+    <mat-chip-list>
+      <mat-chip
+        *ngFor="let comic of comics"
+        (click)="onComicChipClick(comic)"
+        color="accent"
+        selected>
+        {{ comic.label }}
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+</ng-container>
 
 <ng-template #loading>
   <ma-cool-loading></ma-cool-loading>

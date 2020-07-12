@@ -5,25 +5,6 @@ ma-empty-results {
   height: $table-height;
 }
 
-.filtering-bar {
-  background-color: #ffe8d1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 10px 20px 10px;
-  mat-form-field,
-  mat-slide-toggle {
-    display: inline-block;
-    &:not(:first-child) {
-      margin-left: 30px;
-    }
-  }
-  .filter-actions {
-    display: inline-block;
-    margin-left: auto;
-  }
-}
-
 .comics {
-  margin: 0 0 20px;
+  margin: 20px;
 }

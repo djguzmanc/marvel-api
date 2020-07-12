@@ -13,6 +13,14 @@
     <ul class="nav">
       <li
         matRipple
+        [routerLink]="ALL_CHARACTERS"
+        routerLinkActive="active">Characters</li>
+      <li
+        matRipple
+        [routerLink]="ALL_COMICS"
+        routerLinkActive="active">Comics</li>
+      <li
+        matRipple
         [routerLink]="BOOKMARKS"
         routerLinkActive="active">
         <ng-container *ngIf="bookmarks$ | async | keyvalue as bookmarks">
@@ -28,15 +36,11 @@
           </ng-template>
         </ng-container>
       </li>
-      <li
-        matRipple
-        [routerLink]="ALL_CHARACTERS"
-        routerLinkActive="active">Characters</li>
-      <li
-        matRipple
-        [routerLink]="ALL_COMICS"
-        routerLinkActive="active">Comics</li>
-      <li matRipple>Leave</li>
+      <li 
+        matRipple 
+        routerLink="/">
+        Leave
+      </li>
     </ul>
   </mat-sidenav>
   <mat-sidenav-content class="child-container">
