@@ -1,7 +1,7 @@
 <ng-template #loading>
   <ma-cool-loading></ma-cool-loading>
 </ng-template>
-<ng-container *ngslAsyncHandler="characters$ | async as charactersStream;
+<ng-container *ngslAsyncHandler="collection$ | async as charactersStream;
   useLoading: loading">
   <ng-template #empty>
     <ma-empty-results></ma-empty-results>

@@ -3,7 +3,7 @@ import { CharactersFacade, ComicsFacade } from '@domain/application/facade';
 import { Observable } from 'rxjs';
 import { IFacadeApiMap, IMarvelCollection, ICharactersOptions, IComicFilter } from '@utils/interfaces/auxiliary';
 import { ICharactersResponse } from '@utils/interfaces/response';
-import { tap, switchMap, filter, debounceTime } from 'rxjs/operators';
+import { switchMap, filter, debounceTime } from 'rxjs/operators';
 import { FADE_IN_OUT } from '@utils/animations';
 import { FormControl, FormGroup } from '@angular/forms';
 import { EntityList } from '@utils/classes';
@@ -18,9 +18,8 @@ import { EntityList } from '@utils/classes';
     FADE_IN_OUT
   ]
 })
-export class CharactersComponent extends EntityList implements OnInit {
+export class CharactersComponent extends EntityList<ICharactersResponse> implements OnInit {
 
-  characters$!: Observable<IFacadeApiMap<IMarvelCollection<ICharactersResponse>>>;
   comics$!: Observable<IFacadeApiMap<IMarvelCollection<IComicFilter>>>;
 
   comicFilter = new FormControl();
@@ -100,17 +99,13 @@ export class CharactersComponent extends EntityList implements OnInit {
       this.currentPage = 0;
     }
 
-    this.characters$ = this.charactersFacade.getAll({
-      limit: this.pageSize,
-      offset: this.pageSize * this.currentPage,
-      ...this.currentFilters
-    }).pipe(
-      tap(res => {
-        if (res.payload) {
-          this.totalItems = res.payload.total;
-        }
+    this.standardInit({
+      src: this.charactersFacade.getAll({
+        limit: this.pageSize,
+        offset: this.pageSize * this.currentPage,
+        ...this.currentFilters
       })
-    );
+    });
   }
 
   /**

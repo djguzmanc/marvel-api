@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { IComicsController } from '@utils/interfaces/controller';
 import { ComicsApiService } from '@domain/infrastructure/api';
 import { IPaginationOptions, IFacadeApiMap, IMarvelCollection, IComicFilter, IComicsOptions } from '@utils/interfaces/auxiliary';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { IComicsResponse, IStoriesResponse, ICharactersResponse } from '@utils/interfaces/response';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, switchMap } from 'rxjs/operators';
 import { errorHandler } from '@utils/functions';
 import { ComicsService } from '@domain/application/observable-services';
 
@@ -53,8 +53,16 @@ export class ComicsFacade implements IComicsController {
    * @param id Comic id
    */
   getById(id: number): Observable<IFacadeApiMap<IComicsResponse>> {
-    return this.api.getById(id).pipe(
-      map(res => ({ payload: res.data.results[0] })),
+    return this.comicOs.comic$.pipe(
+      switchMap(res => {
+        if (res) {
+          return of(res);
+        }
+        return this.api.getById(id).pipe(
+          map(apiRes => apiRes.data.results[0])
+        );
+      }),
+      map(res => ({ payload: res })),
       catchError(err => errorHandler(err))
     );
   }
