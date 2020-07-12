@@ -1,0 +1,25 @@
+:host {
+  display: block;
+}
+
+.banner {
+  padding-bottom: 20px;
+}
+
+.content {
+  padding: 20px;
+}
+
+mat-icon {
+  vertical-align: middle;
+}
+
+.bookmark {
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.bookmark__link {
+  margin-left: 20px;
+}

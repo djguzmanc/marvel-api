@@ -1,0 +1,49 @@
+@import 'dimens';
+@import 'material-palette';
+
+.layout {
+  width: 100%;
+  height: 100vh;
+}
+
+.side-nav {
+  background-color: map-get($md-primary, 700);
+  color: white;
+  padding: 20px 0;
+}
+
+.side-nav__title {
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.nav {
+  list-style-type: none;
+  padding: 0;
+  li {
+    outline: none;
+    display: block;
+    padding: 10px 70px 10px 30px;
+    cursor: pointer;
+    &.active {
+      background-color: #8000008a;
+    }
+  }
+}
+
+.title__logo {
+  width: 80px;
+  vertical-align: middle;
+}
+
+.title__api {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: $font-size-great;
+}
+
+.child-container {
+  
+}

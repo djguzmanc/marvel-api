@@ -1,0 +1,68 @@
+<ng-template #loading>
+  <ma-cool-loading></ma-cool-loading>
+</ng-template>
+
+<ng-container *ngslAsyncHandler="comic$ | async as comicStream;
+  useLoading: loading">
+  <ng-container *ngIf="comicStream.payload as comic">
+    <section class="top-info">
+      <img
+        [src]="comic.thumbnail | thumbnail:'portrait_uncanny'"
+        alt="comic pic"
+        class="top-info__thumbnail">
+
+      <div class="top-info__detail">
+        <h2 class="detail__name stat--orange">
+          {{ comic.title }}
+          <ng-container *ngIf="isBookmarked$ | async; else notBookmarked">
+            <mat-icon (click)="removeBookmark()">bookmark</mat-icon>
+          </ng-container>
+          <ng-template #notBookmarked>
+            <mat-icon (click)="addBookmark(type, comic.title)">bookmark_border</mat-icon>
+          </ng-template>
+        </h2>
+        <p>{{ comic.description || 'No description' }}</p>
+        <div class="detail__stats">
+          <div class="stat stat--orange">
+            <mat-icon>grade</mat-icon>
+            Characters ({{ comic.characters.available }})
+          </div>
+          <div class="stat stat--blue">
+            <mat-icon>extension</mat-icon>
+            Stories ({{ comic.stories.available }})
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="bottom-content">
+      <div class="images-carousel">
+        <h3>Images</h3>
+        <ngx-slick-carousel
+          #slickModal="slick-carousel"
+          [config]="slideConfig">
+          <div
+            ngxSlickItem
+            *ngFor="let img of comic.images"
+            class="slide">
+            <img
+              [src]="img | thumbnail:'portrait_uncanny'"
+              alt="comic pic"
+              class="slide__image">
+          </div>
+        </ngx-slick-carousel>
+      </div>
+      <div class="entities-container">
+        <ul mat-tab-nav-bar>
+          <li
+            *ngFor="let link of links; let i = index"
+            mat-tab-link
+            [routerLink]="link.label"
+            [active]="link.active">{{ link.label | titlecase }}</li>
+        </ul>
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+
+  </ng-container>
+</ng-container>

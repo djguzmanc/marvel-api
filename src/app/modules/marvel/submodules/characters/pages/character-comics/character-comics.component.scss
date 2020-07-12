@@ -1,0 +1,5 @@
+$table-height: calc(100vh - 368px);
+
+ma-cool-loading , ma-empty-results{
+  height: $table-height;
+}

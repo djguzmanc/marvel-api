@@ -1,0 +1,81 @@
+<div
+  class="table-container"
+  @fadeInOut>
+  <table
+    mat-table
+    [dataSource]="items"
+    class="table mat-elevation-z8">
+
+    <ng-container matColumnDef="thumbnail">
+      <th
+        mat-header-cell
+        *matHeaderCellDef>
+      </th>
+      <td
+        mat-cell
+        *matCellDef="let element"
+        class="thumbnail-td">
+        <img
+          [src]="element.thumbnail | thumbnail:'standard_small'"
+          alt="{{ element.name }} Thumbnail">
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <th
+        class="name-spacing"
+        mat-header-cell
+        *matHeaderCellDef>
+        Title
+      </th>
+      <td
+        class="name-spacing"
+        mat-cell
+        *matCellDef="let element">
+        {{ element.title }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th
+        mat-header-cell
+        *matHeaderCellDef>
+        Description
+      </th>
+      <td
+        mat-cell
+        *matCellDef="let element">
+        {{ (element.description | truncate:100) || 'No description' }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th
+        class="name-spacing"
+        mat-header-cell
+        *matHeaderCellDef>
+        Actions
+      </th>
+      <td
+        class="name-spacing"
+        mat-cell
+        *matCellDef="let element">
+        <button
+          mat-icon-button
+          color="primary"
+          (click)="navigate(element)">
+          <mat-icon>visibility</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tbody>
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns;"></tr>
+    </tbody>
+  </table>
+</div>

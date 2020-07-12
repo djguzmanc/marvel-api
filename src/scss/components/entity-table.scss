@@ -1,0 +1,19 @@
+.table-container {
+  overflow-y: auto;
+}
+
+.table {
+  display: table;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  width: 100%;
+}
+
+.thumbnail-td {
+  padding: 10px 0 0 30px !important;
+  width: 70px !important;
+}
+
+.name-spacing {
+  padding-left: 30px !important;
+}

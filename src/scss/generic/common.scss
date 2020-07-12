@@ -1,0 +1,13 @@
+@import 'dimens';
+@import 'material-config';
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background: white;
+  font-size: $font-size-base;        // Base font size
+  margin: 0;
+}

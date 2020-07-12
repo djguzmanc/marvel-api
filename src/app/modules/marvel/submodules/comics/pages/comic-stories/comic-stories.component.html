@@ -1,0 +1,23 @@
+<ng-template #loading>
+  <ma-cool-loading></ma-cool-loading>
+</ng-template>
+<ng-container *ngslAsyncHandler="collection$ | async as storiesStream;
+  useLoading: loading">
+  <ng-template #empty>
+    <ma-empty-results></ma-empty-results>
+  </ng-template>
+  <ng-container *ngIf="storiesStream.payload as storiesCollection">
+    <ng-container *ngIf="storiesCollection.results.length > 0; else empty">
+      <ma-stories-table
+        maxHeight="calc(100vh - 368px)"
+        [items]="storiesCollection.results"></ma-stories-table>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<mat-paginator
+  [length]="totalItems"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="onNewPage($event)">
+</mat-paginator>

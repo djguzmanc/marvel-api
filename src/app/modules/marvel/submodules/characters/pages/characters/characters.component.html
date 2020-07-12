@@ -1,0 +1,92 @@
+<div
+  [formGroup]="filterForm"
+  class="filtering-bar">
+  <mat-form-field>
+    <mat-label>Filter by name</mat-label>
+    <input
+      formControlName="name"
+      matInput
+      type="search"
+      placeholder="Spider Man">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Comics</mat-label>
+    <input
+      [formControl]="comicFilter"
+      matInput
+      type="search"
+      placeholder="Spider Man"
+      [matAutocomplete]="auto">
+    <mat-icon matSuffix>search</mat-icon>
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option
+        *ngFor="let option of (comics$ | async)?.payload?.results"
+        [value]="option.value"
+        (click)="onComicSelect(option)">
+        {{ option.label }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-slide-toggle formControlName="nameSort">Sort by name</mat-slide-toggle>
+
+  <div class="filter-actions">
+    <button
+      (click)="clearFilters()"
+      class="delete-icon"
+      *ngIf="filterForm.dirty"
+      mat-icon-button
+      color="warn">
+      <mat-icon>delete</mat-icon>
+    </button>
+
+    <button
+      class="filter-button"
+      mat-raised-button
+      color="primary"
+      (click)="applyFilters(filterForm)">
+      Filter characters
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+</div>
+
+<ng-container *ngIf="filterForm.get('comics')?.value as comics">
+  <div *ngIf="comics.length > 0" class="comics">
+    <mat-chip-list>
+      <mat-chip
+        *ngFor="let comic of comics"
+        (click)="onComicChipClick(comic)"
+        color="accent"
+        selected>
+        {{ comic.label }}
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+</ng-container>
+
+<ng-template #loading>
+  <ma-cool-loading></ma-cool-loading>
+</ng-template>
+<ng-container *ngslAsyncHandler="collection$ | async as charactersStream;
+  useLoading: loading">
+  <ng-template #empty>
+    <ma-empty-results></ma-empty-results>
+  </ng-template>
+  <ng-container *ngIf="charactersStream.payload as charactersCollection">
+    <ng-container *ngIf="charactersCollection.results.length > 0; else empty">
+      <ma-characters-table
+        maxHeight="calc(100vh - 215px)"
+        [items]="charactersCollection.results"></ma-characters-table>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<mat-paginator
+  [length]="totalItems"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="onNewPage($event)">
+</mat-paginator>

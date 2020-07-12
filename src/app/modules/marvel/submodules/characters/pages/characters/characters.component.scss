@@ -1,0 +1,10 @@
+$table-height: calc(100vh - 215px);
+
+ma-cool-loading,
+ma-empty-results {
+  height: $table-height;
+}
+
+.comics {
+  margin: 20px;
+}

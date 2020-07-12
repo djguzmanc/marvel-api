@@ -1,0 +1,23 @@
+<ng-template #loading>
+  <ma-cool-loading></ma-cool-loading>
+</ng-template>
+<ng-container *ngslAsyncHandler="collection$ | async as charactersStream;
+  useLoading: loading">
+  <ng-template #empty>
+    <ma-empty-results></ma-empty-results>
+  </ng-template>
+  <ng-container *ngIf="charactersStream.payload as charactersCollection">
+    <ng-container *ngIf="charactersCollection.results.length > 0; else empty">
+      <ma-characters-table
+        maxHeight="calc(100vh - 368px)"
+        [items]="charactersCollection.results"></ma-characters-table>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<mat-paginator
+  [length]="totalItems"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="onNewPage($event)">
+</mat-paginator>

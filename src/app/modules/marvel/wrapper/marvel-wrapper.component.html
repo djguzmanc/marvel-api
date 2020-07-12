@@ -1,0 +1,49 @@
+<mat-sidenav-container class="layout">
+  <mat-sidenav
+    class="side-nav"
+    mode="side"
+    opened>
+    <div class="side-nav__title">
+      <img
+        class="title__logo"
+        src="assets/images/marvel_logo.png"
+        alt="Marvel Logo">
+      <span class="title__api">API</span>
+    </div>
+    <ul class="nav">
+      <li
+        matRipple
+        [routerLink]="ALL_CHARACTERS"
+        routerLinkActive="active">Characters</li>
+      <li
+        matRipple
+        [routerLink]="ALL_COMICS"
+        routerLinkActive="active">Comics</li>
+      <li
+        matRipple
+        [routerLink]="BOOKMARKS"
+        routerLinkActive="active">
+        <ng-container *ngIf="bookmarks$ | async | keyvalue as bookmarks">
+          <ng-container *ngIf="bookmarks.length > 0; else empty">
+            <span
+              [matBadge]="bookmarks.length + ''"
+              matBadgeOverlap="false"
+              matBadgeColor="accent">
+              Bookmarks
+            </span>
+          </ng-container>
+          <ng-template #empty><span>Bookmarks</span>
+          </ng-template>
+        </ng-container>
+      </li>
+      <li 
+        matRipple 
+        routerLink="/">
+        Leave
+      </li>
+    </ul>
+  </mat-sidenav>
+  <mat-sidenav-content class="child-container">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
