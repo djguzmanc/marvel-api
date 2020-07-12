@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "heroku-postbuild": "ng build --prod"
   },
   "private": true,
   "dependencies": {
@@ -22,14 +23,17 @@
     "@angular/platform-browser-dynamic": "~9.1.4",
     "@angular/router": "~9.1.4",
     "@ngsl/components": "0.0.18",
+    "express": "^4.17.1",
     "jquery": "^3.5.1",
     "ng-mat-select-infinite-scroll": "^2.0.0",
     "ngx-slick-carousel": "^0.5.1",
+    "path": "^0.12.7",
     "rxjs": "~6.5.4",
     "slick-carousel": "^1.8.1",
     "subsink": "^1.0.1",
     "tslib": "^1.10.0",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "typescript": "~3.8.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.4",
@@ -41,6 +45,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
+    "enhanced-resolve": "^3.3.0",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~5.0.0",
@@ -48,13 +53,17 @@
     "karma-coverage-istanbul-reporter": "~2.1.0",
     "karma-jasmine": "~3.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
+    "pre-commit": "^1.2.2",
     "protractor": "^7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "~3.8.3",
-    "pre-commit": "^1.2.2"
+    "typescript": "~3.8.3"
   },
   "pre-commit": [
     "lint"
-  ]
+  ],
+  "engines": {
+    "node": "12.16.1",
+    "npm": "6.13.14"
+  }
 }
