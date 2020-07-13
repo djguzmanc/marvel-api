@@ -4,8 +4,9 @@
 @import "objects/common";
 @import "components/common";
 @import "utilities/common";
+@import "settings/fonts-dec";
 
 // Global styles
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: "Roboto" sans-serif; }
