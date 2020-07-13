@@ -4,8 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { ROUTES } from 'app/app.routes';
-import { RequestLoggerInterceptor } from '@interceptors/index';
-import { AuthInterceptor } from '@interceptors/index';
+import { CacheInterceptor, RequestLoggerInterceptor, AuthInterceptor } from '@interceptors/index';
 
 /**
  * Core module
@@ -32,6 +31,11 @@ import { AuthInterceptor } from '@interceptors/index';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CacheInterceptor,
       multi: true
     },
   ]
