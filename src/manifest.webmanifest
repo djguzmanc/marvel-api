@@ -1,7 +1,7 @@
 {
   "name": "marvel-api",
   "short_name": "marvel-api",
-  "theme_color": "#1976d2",
+  "theme_color": "#ec0811",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
